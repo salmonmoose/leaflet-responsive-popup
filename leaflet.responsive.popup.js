@@ -40,9 +40,9 @@ L.ResponsivePopup = L.Popup.extend({
 		this._contentNode = L.DomUtil.create('div', prefix + '-content', wrapper);
 
 		L.DomEvent
+			.on(wrapper, 'contextmenu', L.DomEvent.stopPropagation)
 			.disableClickPropagation(wrapper)
-			.disableScrollPropagation(this._contentNode)
-			.on(wrapper, 'contextmenu', L.DomEvent.stopPropagation);
+			.disableScrollPropagation(this._contentNode);
 
 		if(this.options.hasTip) {
 			this._tipContainer = L.DomUtil.create('div', prefix + '-tip-container', container);
