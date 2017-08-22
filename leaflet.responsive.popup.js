@@ -105,17 +105,82 @@ L.ResponsivePopup = L.Popup.extend({
 		    canGoRight = true,
 		    containerPos = false;
 		
-		if(basePoint.y + anchor.y - offsetY - containerHeight - Math.abs(paddingTL.y) < 0) {
+		if (this.options.forcePosition !== undefined) {
 			canGoTop = false;
-		}
-		if(basePoint.y + anchor.y + offsetY + containerHeight + Math.abs(paddingBR.y) > mapSize.y) {
 			canGoBottom = false;
-		}
-		if(basePoint.x + anchor.x - offsetX - containerWidth - Math.abs(paddingTL.x) < 0) {
 			canGoLeft = false;
-		}
-		if(basePoint.x + anchor.x + offsetX + containerWidth + Math.abs(paddingBR.x) > mapSize.x) {
 			canGoRight = false;
+			switch (this.options.forcePosition) {
+				case 'north':
+					canGoTop = true;
+					break;
+
+				case 'south':
+					canGoBottom = true;
+					break;
+
+				case 'east':
+					canGoRight = true;
+					break;
+
+				case 'west':
+					canGoLeft = true;
+					break;
+
+				case 'north-east':
+					canGoTop = true;
+					canGoRight = true;
+					break;
+
+				case 'north-west':
+					canGoTop = true;
+					canGoLeft = true;
+					break;
+
+				case 'south-east':
+					canGoBottom = true;
+					canGoRight = true;
+					break;
+
+				case 'south-west':
+					canGoBottom = true;
+					canGoLeft = true;
+					break;
+
+				case 'east-north':
+					canGoTop = true;
+					canGoRight = true;
+					break;
+
+				case 'east-south':
+					canGoBottom = true;
+					canGoRight = true;
+					break;
+
+				case 'west-north':
+					canGoTop = true;
+					canGoLeft = true;
+					break;
+
+				case 'west-south':
+					canGoBottom = true;
+					canGoLeft = true;
+					break;
+			}
+		} else {
+
+			if(basePoint.y + anchor.y - offsetY - containerHeight - Math.abs(paddingTL.y) < 0) {
+				canGoTop = false;
+			}
+			if(basePoint.y + anchor.y + offsetY + containerHeight + Math.abs(paddingBR.y) > mapSize.y) {
+				canGoBottom = false;
+			}
+			if(basePoint.x + anchor.x - offsetX - containerWidth - Math.abs(paddingTL.x) < 0) {
+				canGoLeft = false;
+			}
+			if(basePoint.x + anchor.x + offsetX + containerWidth + Math.abs(paddingBR.x) > mapSize.x) {
+				canGoRight = false;
+			}
 		}
 		
 		// manage overflows
